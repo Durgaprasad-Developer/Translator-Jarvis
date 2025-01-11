@@ -8,10 +8,8 @@ function displayTime() {
 // Update time every second
 setInterval(displayTime, 1000);
 
-// Buttons and Controls
+// Buttons
 const startButton = document.getElementById('startButton');
-const controls = document.getElementById('controls');
-const micIcon = document.getElementById('mic-icon');
 const doneButton = document.getElementById('doneButton');
 const stopButton = document.getElementById('stopButton');
 
@@ -19,9 +17,9 @@ let recognition; // Declare recognition globally
 
 // Start Voice Command
 startButton.addEventListener('click', () => {
-    startButton.classList.add("hidden");
-    controls.classList.remove("hidden");
-    micIcon.classList.add("listening");
+    startButton.disabled = true;
+    doneButton.disabled = false;
+    stopButton.disabled = false;
 
     recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
     recognition.lang = "te-IN";
@@ -31,19 +29,19 @@ startButton.addEventListener('click', () => {
     recognition.onresult = function(event) {
         const transcript = event.results[0][0].transcript;
         alert(`You said: ${transcript}`);
-    };
+    }
 
-    recognition.onerror = function() {
+    recognition.onerror = function(event) {
         alert("Sorry, I couldn't hear you. Please try again.");
-        resetUI();
-    };
+        resetButtons();
+    }
 
     recognition.onend = function() {
         if (!doneButton.disabled) {
             alert("Speech recognition stopped.");
-            resetUI();
+            resetButtons();
         }
-    };
+    }
 });
 
 // Done Button - Complete recording
@@ -51,7 +49,7 @@ doneButton.addEventListener('click', () => {
     if (recognition) {
         recognition.stop();
         alert("Recording completed!");
-        resetUI();
+        resetButtons();
     }
 });
 
@@ -60,13 +58,14 @@ stopButton.addEventListener('click', () => {
     if (recognition) {
         recognition.abort();
         alert("Recording stopped.");
-        resetUI();
+        resetButtons();
     }
 });
 
-// Reset UI
-function resetUI() {
-    startButton.classList.remove("hidden");
-    controls.classList.add("hidden");
-    micIcon.classList.remove("listening");
+// Reset buttons
+function resetButtons() {
+    startButton.disabled = false;
+    doneButton.disabled = true;
+    stopButton.disabled = true;
 }
+a
