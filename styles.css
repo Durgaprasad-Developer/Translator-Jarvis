@@ -19,7 +19,7 @@ header {
 }
 
 button {
-    padding: 0.5em 1em;
+    padding: 0.8em 1.5em;
     margin: 0.5em;
     font-size: 1rem;
     border: none;
@@ -76,5 +76,30 @@ button:hover:not(:disabled) {
     50% {
         transform: scale(1.5);
         opacity: 1;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header {
+        font-size: 1.2rem;
+    }
+
+    #dashboard main {
+        padding: 1em;
+    }
+
+    button {
+        font-size: 0.9rem;
+        padding: 0.6em 1.2em;
+    }
+
+    #listeningIcon {
+        margin-top: 1.5em;
+    }
+
+    #recognizedText, #translatedText {
+        font-size: 0.9rem;
+        word-wrap: break-word;
     }
 }
