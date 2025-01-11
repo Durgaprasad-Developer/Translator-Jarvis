@@ -22,7 +22,7 @@ function startVoiceCommand() {
 // Enable Speech-to-Text
 function startVoiceCommand() {
     const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-    recognition.lang = "en-US";
+    recognition.lang = "te-IN";
     recognition.start();
 
     recognition.onresult = function(event) {
