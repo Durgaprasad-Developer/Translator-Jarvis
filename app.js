@@ -70,10 +70,17 @@ stopButton.addEventListener('click', () => {
 
 // Copy Button - Copy translated text
 copyButton.addEventListener('click', () => {
-    const translatedText = document.getElementById('translatedText').innerText;
-    navigator.clipboard.writeText(translatedText).then(() => {
-        alert("Text copied to clipboard!");
-    });
+    const translatedText = document.getElementById('translatedText').textContent.replace("Translated: ", "").trim();
+    if (translatedText) {
+        navigator.clipboard.writeText(translatedText).then(() => {
+            alert("Translated text copied to clipboard!");
+        }).catch(err => {
+            alert("Failed to copy text. Please try again.");
+            console.error(err);
+        });
+    } else {
+        alert("No translated text to copy!");
+    }
 });
 
 // Reset buttons
