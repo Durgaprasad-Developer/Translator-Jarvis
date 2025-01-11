@@ -12,8 +12,10 @@ setInterval(displayTime, 1000);
 const startButton = document.getElementById('startButton');
 const doneButton = document.getElementById('doneButton');
 const stopButton = document.getElementById('stopButton');
+const copyButton = document.getElementById('copyButton');
 
 let recognition; // Declare recognition globally
+let recognizedText = ""; // Store the recognized text
 
 // Start Voice Command
 startButton.addEventListener('click', () => {
@@ -27,21 +29,22 @@ startButton.addEventListener('click', () => {
     recognition.start();
 
     recognition.onresult = function(event) {
-        const transcript = event.results[0][0].transcript;
-        alert(`You said: ${transcript}`);
-    }
+        recognizedText = event.results[0][0].transcript;
+        document.getElementById('recognizedText').innerText = `Recognized: ${recognizedText}`;
+        translateText(recognizedText); // Call translation function
+    };
 
     recognition.onerror = function(event) {
         alert("Sorry, I couldn't hear you. Please try again.");
         resetButtons();
-    }
+    };
 
     recognition.onend = function() {
         if (!doneButton.disabled) {
             alert("Speech recognition stopped.");
             resetButtons();
         }
-    }
+    };
 });
 
 // Done Button - Complete recording
@@ -62,10 +65,34 @@ stopButton.addEventListener('click', () => {
     }
 });
 
+// Copy Button - Copy translated text
+copyButton.addEventListener('click', () => {
+    const translatedText = document.getElementById('translatedText').innerText;
+    navigator.clipboard.writeText(translatedText).then(() => {
+        alert("Text copied to clipboard!");
+    });
+});
+
 // Reset buttons
 function resetButtons() {
     startButton.disabled = false;
     doneButton.disabled = true;
     stopButton.disabled = true;
 }
-a
+
+// Translate text to English
+function translateText(text) {
+    const apiUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=te|en`;
+
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            const translated = data.responseData.translatedText;
+            document.getElementById('translatedText').innerText = `Translated: ${translated}`;
+            copyButton.style.display = "inline"; // Show the copy button
+        })
+        .catch(error => {
+            console.error("Translation error:", error);
+            alert("Translation failed. Please try again.");
+        });
+}
