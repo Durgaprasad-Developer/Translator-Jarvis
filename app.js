@@ -110,41 +110,43 @@ function translateText(text) {
 
 // changes
 let pinput = document.querySelector("#prompt");
-      let submitbtn = document.querySelector("#button");
+let submitbtn = document.querySelector("#button");
 
-      submitbtn.addEventListener("click", () => {
-        const url = "http://localhost:3030/response"; // Replace with your server URL
+console.log(submitbtn)
 
-        const data = {
-          prompt: pinput.value,
-        };
-
-        console.log("Sending data:", data); // Debugging log
-
-        const options = {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        };
-
-        let varun = ""
-        
-        fetch(url, options)
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("Network response was not ok");
-            }
-            return response.json();
-          })
-          .then((data) => {
-            varun = data.generatedText ;
-            document.querySelector("#dpbhai").innerText = varun ;
-            console.log("POST request succeeded with JSON response:", data.generatedText);
-          })
-          .catch((error) => {
-            console.error("Error during POST request:", error);
-          });
+submitbtn.addEventListener("click", () => {
+    const url = "http://localhost:3030/response"; // Replace with your server URL
     
+    const data = {
+      prompt: pinput.value,
+    };
+    
+    console.log("Sending data:", data); // Debugging log
+    
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    };
+    
+    let varun = ""
+    
+    fetch(url, options)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        varun = data.generatedText ;
+        document.querySelector("#dpbhai").innerText = varun ;
+        console.log("POST request succeeded with JSON response:", data.generatedText);
+      })
+      .catch((error) => {
+        console.error("Error during POST request:", error);
       });
+
+});
