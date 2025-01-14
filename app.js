@@ -112,8 +112,6 @@ function translateText(text) {
 let pinput = document.querySelector("#prompt");
 let submitbtn = document.querySelector("#button");
 
-console.log(submitbtn)
-
 submitbtn.addEventListener("click", () => {
     const url = "http://localhost:3030/response"; // Replace with your server URL
     
