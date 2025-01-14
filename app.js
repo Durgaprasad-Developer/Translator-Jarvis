@@ -141,7 +141,7 @@ submitbtn.addEventListener("click", () => {
       .then((data) => {
         varun = data.generatedText ;
         document.querySelector("#dpbhai").innerText = varun ;
-        console.log("POST request succeeded with JSON response:", data.generatedText);
+        //console.log("POST request succeeded with JSON response:", data.generatedText);
       })
       .catch((error) => {
         console.error("Error during POST request:", error);
