@@ -4,85 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jarvis Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <div id="dashboard">
-        <header>
-            <h1>Welcome to Jarvis</h1>
-            <p id="greeting">Hello, what can I do for you today?</p>
+<body class="flex flex-col items-center justify-center h-screen bg-gray-100 p-4">
+    <div class="w-full max-w-md bg-white p-6 rounded-lg shadow-md">
+        <header class="text-center">
+            <h1 class="text-xl font-bold">Welcome to Jarvis</h1>
+            <p id="greeting" class="text-gray-600">Hello, what can I do for you today?</p>
         </header>
-        <main>
-            <div id="time"></div>
-            <div id="weather"></div>
-            <button id="startButton">Start Recording</button>
-            <button id="doneButton" disabled>Done</button>
-            <button id="stopButton" disabled>Stop</button>
-            <div id="listeningIcon" class="hidden">
-                <div class="circle"></div>
-                <div class="circle delay1"></div>
-                <div class="circle delay2"></div>
+        
+        <main class="mt-4 space-y-4">
+            <div id="time" class="text-center text-lg font-semibold"></div>
+            <div id="weather" class="text-center text-gray-500"></div>
+            <div class="flex flex-col gap-2">
+                <button id="startButton" class="w-full bg-blue-500 text-white p-2 rounded-lg">Start Recording</button>
+                <button id="doneButton" class="w-full bg-green-500 text-white p-2 rounded-lg" disabled>Done</button>
+                <button id="stopButton" class="w-full bg-red-500 text-white p-2 rounded-lg" disabled>Stop</button>
             </div>
-            <p id="recognizedText">Recognized: </p>
-            <p id="translatedText">Translated: </p>
-            <button id="copyButton" style="display: none;">Copy</button>
+            
+            <div id="listeningIcon" class="hidden flex justify-center space-x-2">
+                <div class="w-4 h-4 bg-blue-500 rounded-full animate-pulse"></div>
+                <div class="w-4 h-4 bg-blue-400 rounded-full animate-pulse delay-75"></div>
+                <div class="w-4 h-4 bg-blue-300 rounded-full animate-pulse delay-150"></div>
+            </div>
+            
+            <p id="recognizedText" class="text-gray-700">Recognized: </p>
+            <p id="translatedText" class="text-gray-700">Translated: </p>
+            <button id="copyButton" class="hidden w-full bg-gray-500 text-white p-2 rounded-lg">Copy</button>
         </main>
     </div>
-
-<!--     changes -->
-    <p>Enter input:</p>
-    <input type="text" name="prompt" id="prompt" />
-    <button id="button">Submit</button>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f4f4f4;
-        }
-        .chat-container {
-            width: 400px;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .messages {
-            height: 300px;
-            overflow-y: auto;
-            border-bottom: 1px solid #ccc;
-            margin-bottom: 10px;
-            padding: 10px;
-        }
-        .input-area {
-            display: flex;
-        }
-        input {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        button {
-            padding: 10px;
-            border: none;
-            background: blue;
-            color: white;
-            cursor: pointer;
-            margin-left: 5px;
-            border-radius: 5px;
-        }
-    </style>
-</head>
-<body>
-    <div class="chat-container">
-        <div class="messages" id="messages"></div>
-        <div class="input-area">
-            <input type="text" id="userInput" placeholder="Type your message...">
-            <button onclick="sendMessage()">Send</button>
+    
+    <div class="w-full max-w-md mt-4 p-4 bg-white rounded-lg shadow-md">
+        <p class="text-gray-700">Enter input:</p>
+        <input type="text" name="prompt" id="prompt" class="w-full p-2 border rounded-lg mt-2" />
+        <button id="button" class="w-full bg-blue-500 text-white p-2 rounded-lg mt-2">Submit</button>
+    </div>
+    
+    <div class="w-full max-w-md mt-4 bg-white p-6 rounded-lg shadow-md">
+        <div class="messages h-48 overflow-y-auto border-b mb-4 p-2" id="messages"></div>
+        <div class="flex gap-2">
+            <input type="text" id="userInput" placeholder="Type your message..." class="flex-1 p-2 border rounded-lg" />
+            <button onclick="sendMessage()" class="bg-blue-500 text-white p-2 rounded-lg">Send</button>
         </div>
     </div>
 
@@ -97,6 +59,7 @@
             // Display user message
             const userDiv = document.createElement("div");
             userDiv.textContent = "You: " + userMessage;
+            userDiv.classList.add("text-blue-600", "font-medium");
             messageBox.appendChild(userDiv);
             inputField.value = "";
             messageBox.scrollTop = messageBox.scrollHeight;
@@ -113,6 +76,7 @@
                 // Display bot response
                 const botDiv = document.createElement("div");
                 botDiv.textContent = "Bot: " + data.generatedText;
+                botDiv.classList.add("text-green-600", "font-medium");
                 messageBox.appendChild(botDiv);
                 messageBox.scrollTop = messageBox.scrollHeight;
             } catch (error) {
@@ -120,8 +84,5 @@
             }
         }
     </script>
-
-    <p id="dpbhai"></p>
-    <script src="app.js"></script>
 </body>
 </html>
